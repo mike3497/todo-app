@@ -16,14 +16,14 @@
     </div>
     <div v-if="!isEditing" class="flex items-center gap-1">
       <button
-        class="bg-gray-950 text-white px-2 py-2 text-sm rounded-lg cursor-pointer"
+        class="bg-black text-white px-2 py-2 text-sm rounded-lg cursor-pointer"
         @click="onEditClick"
       >
         <Pencil class="w-3 h-3" />
         <span class="sr-only">Edit</span>
       </button>
       <button
-        class="bg-gray-950 text-white px-2 py-2 text-sm rounded-lg cursor-pointer"
+        class="bg-black text-white px-2 py-2 text-sm rounded-lg cursor-pointer"
         @click="onDeleteClick"
       >
         <Trash class="w-3 h-3" />
@@ -32,14 +32,14 @@
     </div>
     <div v-else class="flex items-center gap-1">
       <button
-        class="bg-gray-950 text-white px-2 py-2 text-sm rounded-lg cursor-pointer"
+        class="bg-black text-white px-2 py-2 text-sm rounded-lg cursor-pointer"
         @click="onSaveClick"
       >
         <Save class="w-3 h-3" />
         <span class="sr-only">Save</span>
       </button>
       <button
-        class="bg-gray-950 text-white px-2 py-2 text-sm rounded-lg cursor-pointer"
+        class="bg-black text-white px-2 py-2 text-sm rounded-lg cursor-pointer"
         @click="onCancelClick"
       >
         <Ban class="w-3 h-3" />
@@ -50,6 +50,7 @@
 </template>
 
 <script setup lang="ts">
+import { useConfirmationDialog } from '@/composables/useConfirmationDialog';
 import type { Todo } from '@/models/todo';
 import { useTodosStore } from '@/stores/todos';
 import { Ban, Pencil, Save, Trash } from 'lucide-vue-next';
@@ -59,6 +60,7 @@ const props = defineProps<{
   todo: Todo;
 }>();
 
+const { open } = useConfirmationDialog();
 const todosStore = useTodosStore();
 
 const isEditing = ref<boolean>(false);
@@ -73,7 +75,13 @@ const onEditClick = () => {
 };
 
 const onDeleteClick = () => {
-  todosStore.removeTodo(props.todo.id);
+  open({
+    title: 'Confirm Deletion',
+    message: 'Are you sure you want to delete this todo?',
+    onConfirm: () => {
+      todosStore.removeTodo(props.todo.id);
+    },
+  });
 };
 
 const onSaveClick = () => {

@@ -6,9 +6,11 @@
       <TodoList />
     </div>
   </div>
+  <ConfirmationDialog />
 </template>
 
 <script setup lang="ts">
+import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
 import TodoForm from '@/components/TodoForm.vue';
 import TodoList from '@/components/TodoList.vue';
 </script>

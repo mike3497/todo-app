@@ -1,0 +1,95 @@
+<template>
+  <li
+    class="bg-gray-100 border border-gray-300 p-2 rounded-lg flex items-center justify-between gap-4"
+  >
+    <div class="flex-1 flex items-center gap-2">
+      <input type="checkbox" :value="todo.completed" @change="onToggleComplete" />
+      <span v-if="!isEditing" class="text-sm p-2" :class="{ 'line-through': todo.completed }">
+        {{ todo.title }}
+      </span>
+      <input
+        v-else
+        v-model="titleValue"
+        class="border border-gray-300 bg-white p-2 rounded-lg text-sm w-full"
+        type="text"
+      />
+    </div>
+    <div v-if="!isEditing" class="flex items-center gap-1">
+      <button
+        class="bg-gray-950 text-white px-2 py-2 text-sm rounded-lg cursor-pointer"
+        @click="onEditClick"
+      >
+        <Pencil class="w-3 h-3" />
+        <span class="sr-only">Edit</span>
+      </button>
+      <button
+        class="bg-gray-950 text-white px-2 py-2 text-sm rounded-lg cursor-pointer"
+        @click="onDeleteClick"
+      >
+        <Trash class="w-3 h-3" />
+        <span class="sr-only">Delete</span>
+      </button>
+    </div>
+    <div v-else class="flex items-center gap-1">
+      <button
+        class="bg-gray-950 text-white px-2 py-2 text-sm rounded-lg cursor-pointer"
+        @click="onSaveClick"
+      >
+        <Save class="w-3 h-3" />
+        <span class="sr-only">Save</span>
+      </button>
+      <button
+        class="bg-gray-950 text-white px-2 py-2 text-sm rounded-lg cursor-pointer"
+        @click="onCancelClick"
+      >
+        <Ban class="w-3 h-3" />
+        <span class="sr-only">Cancel</span>
+      </button>
+    </div>
+  </li>
+</template>
+
+<script setup lang="ts">
+import type { Todo } from '@/models/todo';
+import { useTodosStore } from '@/stores/todos';
+import { Ban, Pencil, Save, Trash } from 'lucide-vue-next';
+import { ref, watch } from 'vue';
+
+const props = defineProps<{
+  todo: Todo;
+}>();
+
+const todosStore = useTodosStore();
+
+const isEditing = ref<boolean>(false);
+const titleValue = ref<string>(props.todo.title);
+
+const onToggleComplete = () => {
+  todosStore.toggleTodoCompleted(props.todo.id);
+};
+
+const onEditClick = () => {
+  isEditing.value = true;
+};
+
+const onDeleteClick = () => {
+  todosStore.removeTodo(props.todo.id);
+};
+
+const onSaveClick = () => {
+  todosStore.updateTodoTitle(props.todo.id, titleValue.value);
+  isEditing.value = false;
+};
+
+const onCancelClick = () => {
+  titleValue.value = props.todo.title;
+  isEditing.value = false;
+};
+
+watch(
+  () => props.todo.title,
+  (newTitle) => {
+    titleValue.value = newTitle;
+  },
+);
+</script>

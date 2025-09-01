@@ -1,11 +1,16 @@
 <template>
   <form @submit.prevent="onSubmit">
     <div class="flex flex-col gap-2 mb-4">
-      <label class="font-semibold text-sm">Task</label>
-      <input v-model="task" class="border border-gray-300 p-2 rounded-lg" type="text" />
+      <label class="font-semibold text-sm" for="todo-title">Todo Title</label>
+      <input
+        v-model="todoTitle"
+        class="border border-gray-300 p-2 rounded-lg"
+        id="todo-title"
+        type="text"
+      />
     </div>
     <button class="bg-gray-950 text-white px-4 py-2 rounded-lg cursor-pointer w-full" type="submit">
-      Add Task
+      Add Todo
     </button>
   </form>
 </template>
@@ -18,18 +23,18 @@ import { ref } from 'vue';
 
 const todosStore = useTodosStore();
 
-const task = ref<string>('');
+const todoTitle = ref<string>('');
 
 const onSubmit = () => {
-  if (task.value.trim() !== '') {
+  if (todoTitle.value.trim() !== '') {
     const todo: Todo = {
       id: nanoid(),
-      title: task.value,
+      title: todoTitle.value,
       completed: false,
     };
 
     todosStore.addTodo(todo);
-    task.value = '';
+    todoTitle.value = '';
   }
 };
 </script>

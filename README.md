@@ -1,45 +1,32 @@
-# todo-app
+# Todo App
 
-This template should help get you started developing with Vue 3 in Vite.
+This is a simple Todo app built with Vue 3.  
+I created it to practice my Vue 3 skills and experiment with modern frontend tools.
 
-## Recommended IDE Setup
+## Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Add, edit, and delete todos
+- Mark todos as completed
+- Todos are stored in your browser's local storage
+- Responsive and modern UI using Tailwind CSS
+- Uses [VueUse](https://vueuse.org/) for helpful Vue composables
+- Modal dialogs powered by [Headless UI](https://headlessui.com/vue)
 
-## Type Support for `.vue` Imports in TS
+## Tech Stack
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+- [Vue 3](https://vuejs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [VueUse](https://vueuse.org/)
+- [Headless UI](https://headlessui.com/vue)
 
-## Customize configuration
+## Getting Started
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+1. Clone this repository
+2. Install dependencies:  
+   `npm install`
+3. Run the development server:  
+   `npm run dev`
 
-## Project Setup
+## License
 
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+This project is for learning and personal use.

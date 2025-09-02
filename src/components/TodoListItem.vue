@@ -4,13 +4,20 @@
     class="bg-gray-100 border border-gray-300 p-2 rounded-lg flex items-center justify-between gap-4"
   >
     <div class="flex-1 flex items-center gap-2">
-      <input type="checkbox" :checked="todo.completed" @change="onToggleComplete" />
+      <input
+        class="accent-purple-600 w-4 h-4 rounded-lg"
+        type="checkbox"
+        :id="`todo-completed-${todo.id}`"
+        :checked="todo.completed"
+        @change="onToggleComplete"
+      />
       <span v-if="!isEditing" class="text-sm p-2" :class="{ 'line-through': todo.completed }">
         {{ todo.title }}
       </span>
       <input
         v-else
         v-model="titleValue"
+        :id="`todo-title-${todo.id}`"
         class="border border-gray-300 bg-white p-2 rounded-lg text-sm w-full"
         type="text"
         @keydown.enter="onKeydownEnter"

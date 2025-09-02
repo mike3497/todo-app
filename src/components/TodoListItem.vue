@@ -3,7 +3,7 @@
     class="bg-gray-100 border border-gray-300 p-2 rounded-lg flex items-center justify-between gap-4"
   >
     <div class="flex-1 flex items-center gap-2">
-      <input type="checkbox" :value="todo.completed" @change="onToggleComplete" />
+      <input type="checkbox" :checked="todo.completed" @change="onToggleComplete" />
       <span v-if="!isEditing" class="text-sm p-2" :class="{ 'line-through': todo.completed }">
         {{ todo.title }}
       </span>

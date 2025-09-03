@@ -33,20 +33,8 @@
                 </p>
               </div>
               <footer class="flex items-center justify-end gap-2 mt-2">
-                <button
-                  type="button"
-                  class="bg-gray-200 text-black px-4 py-2 rounded-lg cursor-pointer"
-                  @click="onClose"
-                >
-                  No
-                </button>
-                <button
-                  type="button"
-                  class="bg-black text-white px-4 py-2 rounded-lg cursor-pointer"
-                  @click="onConfirm"
-                >
-                  Yes
-                </button>
+                <AppButton type="button" variant="secondary" @click="onClose">No</AppButton>
+                <AppButton type="button" variant="primary" @click="onConfirm">Yes</AppButton>
               </footer>
             </DialogPanel>
           </TransitionChild>
@@ -59,6 +47,7 @@
 <script setup lang="ts">
 import { useConfirmationDialog } from '@/composables/useConfirmationDialog';
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
+import AppButton from './AppButton.vue';
 
 const { isOpen, close, confirm, title, message } = useConfirmationDialog();
 

@@ -3,18 +3,15 @@
     <TodoListItem v-for="todo in displayedTodos" :key="todo.id" :todo="todo" />
   </ul>
   <div class="flex items-center justify-center gap-2">
-    <button
+    <AppButton
       v-for="page in totalPages"
       :key="page"
-      class="px-2 py-1 text-sm rounded-lg cursor-pointer"
-      :class="{
-        'bg-black text-white': currentPage === page,
-        'bg-gray-100 text-black': currentPage !== page,
-      }"
+      size="small"
+      :variant="getPageButtonVariant(page)"
       @click="onPageChange(page)"
     >
       {{ page }}
-    </button>
+    </AppButton>
   </div>
 </template>
 
@@ -22,7 +19,9 @@
 import TodoListItem from '@/components/TodoListItem.vue';
 import type { Todo } from '@/models/todo';
 import { useTodosStore } from '@/stores/todos';
+import type { ButtonVariant } from '@/types/buttonVariant';
 import { computed, ref } from 'vue';
+import AppButton from './AppButton.vue';
 
 const todosStore = useTodosStore();
 
@@ -39,5 +38,13 @@ const displayedTodos = computed<Todo[]>(() => {
 
 const onPageChange = (page: number) => {
   currentPage.value = page;
+};
+
+const getPageButtonVariant = (page: number): ButtonVariant => {
+  if (currentPage.value === page) {
+    return 'primary';
+  } else {
+    return 'secondary';
+  }
 };
 </script>

@@ -7,15 +7,16 @@
         class="border border-gray-300 p-2 rounded-lg"
         id="todo-title"
         type="text"
+        :maxlength="maxTodoTitleLength"
       />
+      <span class="text-sm text-right">{{ todoTitle.length }} / {{ maxTodoTitleLength }}</span>
     </div>
-    <button class="bg-gray-950 text-white px-4 py-2 rounded-lg cursor-pointer w-full" type="submit">
-      Add Todo
-    </button>
+    <AppButton class="w-full" type="submit">Add Todo</AppButton>
   </form>
 </template>
 
 <script setup lang="ts">
+import AppButton from '@/components/AppButton.vue';
 import type { Todo } from '@/models/todo';
 import { useTodosStore } from '@/stores/todos';
 import { nanoid } from 'nanoid';
@@ -23,6 +24,7 @@ import { ref } from 'vue';
 
 const todosStore = useTodosStore();
 
+const maxTodoTitleLength = 64;
 const todoTitle = ref<string>('');
 
 const onSubmit = () => {

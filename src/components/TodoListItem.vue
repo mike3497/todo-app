@@ -24,36 +24,24 @@
       />
     </div>
     <div v-if="!isEditing" class="flex items-center gap-1">
-      <button
-        class="bg-black text-white px-2 py-2 text-sm rounded-lg cursor-pointer"
-        @click="onEditClick"
-      >
+      <AppButton size="small" @click="onEditClick">
         <Pencil class="w-3 h-3" />
         <span class="sr-only">Edit</span>
-      </button>
-      <button
-        class="bg-black text-white px-2 py-2 text-sm rounded-lg cursor-pointer"
-        @click="onDeleteClick"
-      >
+      </AppButton>
+      <AppButton size="small" @click="onDeleteClick">
         <Trash class="w-3 h-3" />
         <span class="sr-only">Delete</span>
-      </button>
+      </AppButton>
     </div>
     <div v-else class="flex items-center gap-1">
-      <button
-        class="bg-black text-white px-2 py-2 text-sm rounded-lg cursor-pointer"
-        @click="onSaveClick"
-      >
+      <AppButton size="small" @click="onSaveClick">
         <Save class="w-3 h-3" />
         <span class="sr-only">Save</span>
-      </button>
-      <button
-        class="bg-black text-white px-2 py-2 text-sm rounded-lg cursor-pointer"
-        @click="onCancelClick"
-      >
+      </AppButton>
+      <AppButton size="small" @click="onCancelClick">
         <Ban class="w-3 h-3" />
         <span class="sr-only">Cancel</span>
-      </button>
+      </AppButton>
     </div>
   </li>
 </template>
@@ -65,6 +53,7 @@ import { useTodosStore } from '@/stores/todos';
 import { onClickOutside } from '@vueuse/core';
 import { Ban, Pencil, Save, Trash } from 'lucide-vue-next';
 import { ref, useTemplateRef, watch } from 'vue';
+import AppButton from './AppButton.vue';
 
 const props = defineProps<{
   todo: Todo;

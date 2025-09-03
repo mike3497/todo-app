@@ -3,15 +3,21 @@
     <div class="flex flex-col gap-2 mb-4">
       <label class="font-semibold text-sm" for="todo-title">Todo Title</label>
       <input
-        v-model="todoTitle"
-        class="border border-gray-300 p-2 rounded-lg"
         id="todo-title"
+        v-model="todoTitle"
+        class="border border-zinc-300 bg-white p-2 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-purple-400 mb-1"
         type="text"
+        placeholder="e.g. Buy groceries"
         :maxlength="maxTodoTitleLength"
+        @input="isTouched = true"
+        @blur="isTouched = true"
       />
-      <span class="text-sm text-right">{{ todoTitle.length }} / {{ maxTodoTitleLength }}</span>
+      <div class="flex items-center justify-between text-xs text-zinc-500">
+        <span v-if="isTouched && !isInputValid" class="text-red-500">Title is required.</span>
+        <span class="ml-auto">{{ remainingChars }} chars left</span>
+      </div>
     </div>
-    <AppButton class="w-full" type="submit">Add Todo</AppButton>
+    <AppButton class="w-full" type="submit" :disabled="!isInputValid">Add Todo</AppButton>
   </form>
 </template>
 
@@ -20,23 +26,36 @@ import AppButton from '@/components/AppButton.vue';
 import type { Todo } from '@/models/todo';
 import { useTodosStore } from '@/stores/todos';
 import { nanoid } from 'nanoid';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const todosStore = useTodosStore();
 
 const maxTodoTitleLength = 64;
 const todoTitle = ref<string>('');
+const isTouched = ref<boolean>(false);
+
+const remainingChars = computed<number>(() => {
+  return maxTodoTitleLength - todoTitle.value.length;
+});
+
+const isInputValid = computed<boolean>(() => {
+  return todoTitle.value.trim() !== '' && todoTitle.value.length <= maxTodoTitleLength;
+});
 
 const onSubmit = () => {
-  if (todoTitle.value.trim() !== '') {
-    const todo: Todo = {
-      id: nanoid(),
-      title: todoTitle.value,
-      completed: false,
-    };
-
-    todosStore.addTodo(todo);
-    todoTitle.value = '';
+  isTouched.value = true;
+  if (!isInputValid.value) {
+    return;
   }
+
+  const todo: Todo = {
+    id: nanoid(),
+    title: todoTitle.value.trim(),
+    completed: false,
+  };
+
+  todosStore.addTodo(todo);
+  todoTitle.value = '';
+  isTouched.value = false;
 };
 </script>

@@ -1,11 +1,11 @@
 <template>
   <li
     ref="target"
-    class="bg-gray-100 border border-gray-300 p-2 rounded-lg flex items-center justify-between gap-4"
+    class="bg-zinc-100 border border-zinc-300 p-2 rounded-lg flex items-center justify-between gap-4"
   >
     <div class="flex-1 flex items-center gap-2">
       <input
-        class="accent-purple-600 w-4 h-4 rounded-lg"
+        class="accent-purple-600 w-4 h-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
         type="checkbox"
         :id="`todo-completed-${todo.id}`"
         :checked="todo.completed"
@@ -18,7 +18,7 @@
         v-else
         v-model="titleValue"
         :id="`todo-title-${todo.id}`"
-        class="border border-gray-300 bg-white p-2 rounded-lg text-sm w-full"
+        class="border border-zinc-300 bg-white p-2 rounded-lg text-sm w-full focus:outline-none focus:ring-2 focus:ring-purple-400"
         type="text"
         @keydown.enter="onKeydownEnter"
       />

@@ -1,6 +1,8 @@
 <template>
   <ul class="flex flex-col gap-4">
-    <TodoListItem v-for="todo in displayedTodos" :key="todo.id" :todo="todo" />
+    <TransitionGroup name="list">
+      <TodoListItem v-for="todo in displayedTodos" :key="todo.id" :todo="todo" />
+    </TransitionGroup>
   </ul>
   <div class="flex items-center justify-center gap-2">
     <AppButton
@@ -48,3 +50,21 @@ const getPageButtonVariant = (page: number): ButtonVariant => {
   }
 };
 </script>
+
+<style>
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.list-leave-active {
+  position: absolute;
+}
+</style>

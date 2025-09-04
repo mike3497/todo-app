@@ -1,10 +1,8 @@
 <template>
-  <ul class="flex flex-col gap-4">
-    <TransitionGroup name="list">
-      <TodoListItem v-for="todo in displayedTodos" :key="todo.id" :todo="todo" />
-    </TransitionGroup>
+  <ul v-if="displayedTodos.length > 0" class="flex flex-col gap-4">
+    <TodoListItem v-for="todo in displayedTodos" :key="todo.id" :todo="todo" />
   </ul>
-  <div class="flex items-center justify-center gap-2">
+  <div v-if="totalPages > 1" class="flex items-center justify-center gap-2">
     <AppButton
       v-for="page in totalPages"
       :key="page"
@@ -22,7 +20,7 @@ import TodoListItem from '@/components/TodoListItem.vue';
 import type { Todo } from '@/models/todo';
 import { useTodosStore } from '@/stores/todos';
 import type { ButtonVariant } from '@/types/buttonVariant';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import AppButton from './AppButton.vue';
 
 const todosStore = useTodosStore();
@@ -49,6 +47,15 @@ const getPageButtonVariant = (page: number): ButtonVariant => {
     return 'secondary';
   }
 };
+
+watch(
+  () => totalPages.value,
+  (newTotalPages) => {
+    if (currentPage.value > newTotalPages) {
+      currentPage.value = Math.max(newTotalPages, 1);
+    }
+  },
+);
 </script>
 
 <style>

@@ -5,7 +5,7 @@
       <input
         id="todo-title"
         v-model="todoTitle"
-        class="border border-zinc-300 bg-white p-2 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-purple-400 mb-1"
+        :class="`border bg-white p-2 rounded-lg w-full focus:outline-none focus:ring-2 mb-1 ${inputBorderClass}`"
         type="text"
         placeholder="e.g. Buy groceries"
         :maxlength="maxTodoTitleLength"
@@ -40,6 +40,13 @@ const remainingChars = computed<number>(() => {
 
 const isInputValid = computed<boolean>(() => {
   return todoTitle.value.trim() !== '' && todoTitle.value.length <= maxTodoTitleLength;
+});
+
+const inputBorderClass = computed<string>(() => {
+  if (isTouched.value && !isInputValid.value) {
+    return 'border-red-500 focus:ring-red-400';
+  }
+  return 'border-zinc-300 focus:ring-purple-400';
 });
 
 const onSubmit = () => {
